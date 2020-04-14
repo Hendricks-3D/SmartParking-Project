@@ -12,8 +12,8 @@ const routes: Routes = [
     component: MenuPage,
     children: [
       {
-        path: 'home',
-        loadChildren: '../home/home.module#HomePageModule'
+        path: 'main',
+        loadChildren: '../smart-parking-home/smart-parking-home.module#SmartParkingHomePageModule'
       },
       {
         path: 'core-team',
@@ -33,13 +33,14 @@ const routes: Routes = [
       },
       {
         path: 'privacy',
+        
         loadChildren: '../privacy-policy/privacy-policy.module#PrivacyPolicyPageModule'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/menu/home'
+    redirectTo: '/menu/main'
   }
 ]
 

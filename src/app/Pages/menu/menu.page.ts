@@ -15,7 +15,7 @@ export class MenuPage implements OnInit {
 
     {
       name: 'Home',
-      path: '/menu/home'
+      path: '/menu/main'
     },
 
     {

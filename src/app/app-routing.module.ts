@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './Pages/menu/menu.module#MenuPageModule'
+  },
+  {
+    path: 'smart-parking-home',
+    loadChildren: () => import('./Pages/smart-parking-home/smart-parking-home.module').then( m => m.SmartParkingHomePageModule)
   }
 ];
 

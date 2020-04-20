@@ -1,7 +1,17 @@
 
 import { MapBoxService,Feature } from 'src/app/Services/map-box.service';
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-//import { Geolocation } from '@ionic-enterprise/geolocation';
+import {Component,OnInit, ViewChild} from '@angular/core';
+import { DbUtilityService } from 'src/app/Services/db-utility.service';
+import { IParkSpaces } from 'src/app/Interfaces/ipark-spaces';
+//import { Geolocation } from '@ionic-native/geolocation';
+
+import { NavController } from '@ionic/angular';
+import { ParkingDataService } from 'src/app/Services/Data/parking-data.service';
+import { Router } from '@angular/router';
+import { ParkingAreasPage } from '../parking-areas/parking-areas.page';
+
+
+
 
 declare var google;
 
@@ -21,30 +31,29 @@ export class SmartParkingHomePage implements OnInit {
    map: any;
    latitude:any;
    longitude:any;
-  
+
+   public parking_spaces_List:IParkSpaces[] =[];
+    public searchInput:string='';//stores user input from the search bar
 
   addresses: string[] = [];
   selectedAddress = null;
 
 
 
-  constructor(private mapboxService:MapBoxService) { }
+  constructor(private mapboxService:MapBoxService,private DbUtil:DbUtilityService,
+   public navCtrl:Router, private parkingData:ParkingDataService) { }
 
-  ngOnInit():void {}
+  ngOnInit():void {
+    this.initMap();
+    this.getCurrenposition();
 
-  ngAfterContentInit():void {
+  }
 
-/*
-    Geolocation.getCurrentPosition({
-      timeout: 10000,
-      enableHighAccuracy:true
-   }).then((resp)=>{
-       this.lat =resp.coords.latitude;
-       this.lng =resp.coords.longitude;
 
-   
-
+  /**
+   * Method that initialize map and display it in the div tag by @ViewChild 
    */
+  initMap() {
 
   let latlng = new google.maps.LatLng(18.1096,77.2975);
     //MAP OPTIONS
@@ -56,36 +65,87 @@ export class SmartParkingHomePage implements OnInit {
 
 
     this.map = new google.maps.Map(this.mapElement.nativeElement,mapOptions);//CREATE MAP WITH PRESET OPTIONS
+
+      
   }
 
 
+  /***
+   * Method that gets user location
+  */
+private getCurrenposition():void{
 
-
-
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position)=>{
+      this.longitude = position.coords.longitude;
+      this.latitude= position.coords.latitude;
+      
+      console.log("latLng: "+this.latitude,this.longitude);
+    });
+} else {
+   console.log("No support for geolocation")
+}
 
   /*
-  //ALLOWS USER TO SEARCH FOR ANYWHERE 
-  public search(event: any) {
-    const searchTerm = event.target.value.toLowerCase();
+  this.geolocation.getCurrentPosition().then((resp) => {
+    this.latitude=  resp.coords.latitude,
+  this.longitude= resp.coords.longitude
 
-    if (searchTerm && searchTerm.length > 0) {
-      this.mapboxService.search_word(searchTerm).subscribe((features: Feature[]) => {
-          this.addresses = features.map(feat => feat.place_name);
-        });
-      } else {
-        this.addresses = [];
-      }
+  
+   }).catch((error) => {
+     console.log('Error getting location', error);
+   });*/
+}
+ 
+
+
+ 
+
+
+  //GET ALL PARKING SPACE FROM THE FIREBASE API
+  
+private getAllParkingSpaces():void{
+  this.DbUtil.getAllParkingSpaces().toPromise().then(data=>{
+
+    this.parking_spaces_List=data as IParkSpaces[];
+    
+  })
+}
+
+/**
+ * 
+ * @param ev 
+ * Allows user to search input field for parking area
+ */
+searchParking(ev: any) {
+  // 
+  this.getAllParkingSpaces()
+  let location:string;
+  
+  // set val to the value of the searchbar
+  this.searchInput = ev.target.value;
+
+  // if the value is an empty string don't filter the Members
+  if (this.searchInput && this.searchInput.trim() != '') {
+    this.parking_spaces_List= this.parking_spaces_List.filter((space) => {
+      location= space.location;
+      return (location.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1);
+    })
   }
+}//END OF GET MEMBER
 
 
-  //HANDLE WHAT TO DO WHEN USER CLICK ON SEARCH RESULTS
-  onSelect(address: string) {
-    this.selectedAddress = address;
-    this.addresses = [];
-  }
+loadParkingAreas(parkingSpace={} as IParkSpaces): void{
 
 
+ this.navCtrl.navigateByUrl('/menu/parking-areas');
+ console.log("button works")
+ this.parkingData.setParkingData(parkingSpace)
 
-*/
+ 
+
+
+}
+
 
 }

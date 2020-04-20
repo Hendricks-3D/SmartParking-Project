@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'smart-parking-home',
     loadChildren: () => import('./Pages/smart-parking-home/smart-parking-home.module').then( m => m.SmartParkingHomePageModule)
+  },
+  {
+    path: 'parking-areas',
+    loadChildren: () => import('./Pages/parking-areas/parking-areas.module').then( m => m.ParkingAreasPageModule)
   }
 ];
 

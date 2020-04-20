@@ -15,12 +15,14 @@
       <ion-row>
         <ion-col offset=1 size=9>
           <div style="position: relative">
-            <ion-searchbar debounce=500 ></ion-searchbar>
+          
+            <ion-searchbar debounce=500  (ionInput)="searchParking($event)"  [(ngModel)]="searchInput"></ion-searchbar>
             <div style="position: absolute; width: 100%; z-index: 999;">
-              <ion-list lines="none">
-                <ion-item >
+              <ion-list lines="none"  *ngIf="searchInput.length > 0">
+                <ion-item  *ngFor="let space of parking_spaces_List | customFilter:searchInput"  (click)="loadParkingAreas(space)">
                   <ion-icon name="pin"></ion-icon>
-                  
+                 
+                  {{space.location}}
                 </ion-item>
               </ion-list>
             </div>
@@ -29,7 +31,7 @@
       </ion-row>
     </ion-grid>
 
-    <div #map id="map"   ></div>
+    <div #map id="map"  class="map" ></div>
 
 
   </ion-content>

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SmartParkingHomePageRoutingModule } from './smart-parking-home-routing.module';
 
 import { SmartParkingHomePage } from './smart-parking-home.page';
-
+import { CustomFilterPipe } from '../../custom-filter.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +15,6 @@ import { SmartParkingHomePage } from './smart-parking-home.page';
     IonicModule,
     SmartParkingHomePageRoutingModule
   ],
-  declarations: [SmartParkingHomePage]
+  declarations: [SmartParkingHomePage,CustomFilterPipe ],
 })
 export class SmartParkingHomePageModule {}

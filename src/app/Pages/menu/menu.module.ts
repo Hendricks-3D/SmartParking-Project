@@ -36,6 +36,12 @@ const routes: Routes = [
         
         loadChildren: '../privacy-policy/privacy-policy.module#PrivacyPolicyPageModule'
       }
+      ,
+      {
+        path: 'parking-areas',
+        
+        loadChildren: '../parking-areas/parking-areas.module#ParkingAreasPageModule'
+      }
     ]
   },
   {

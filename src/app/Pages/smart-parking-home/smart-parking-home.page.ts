@@ -3,12 +3,10 @@ import { MapBoxService,Feature } from 'src/app/Services/map-box.service';
 import {Component,OnInit, ViewChild} from '@angular/core';
 import { DbUtilityService } from 'src/app/Services/db-utility.service';
 import { IParkSpaces } from 'src/app/Interfaces/ipark-spaces';
-//import { Geolocation } from '@ionic-native/geolocation';
 
-import { NavController } from '@ionic/angular';
 import { ParkingDataService } from 'src/app/Services/Data/parking-data.service';
 import { Router } from '@angular/router';
-import { ParkingAreasPage } from '../parking-areas/parking-areas.page';
+
 
 
 
@@ -33,6 +31,11 @@ export class SmartParkingHomePage implements OnInit {
    longitude:any;
 
    public parking_spaces_List:IParkSpaces[] =[];
+   public prev:IParkSpaces;
+   public cur:IParkSpaces;
+  public index = 0;
+   public unique_parking_spaces_List:IParkSpaces[] =[];//This variable stores all parking spaces with unique location
+   
     public searchInput:string='';//stores user input from the search bar
 
   addresses: string[] = [];
@@ -41,14 +44,42 @@ export class SmartParkingHomePage implements OnInit {
 
 
   constructor(private mapboxService:MapBoxService,private DbUtil:DbUtilityService,
-   public navCtrl:Router, private parkingData:ParkingDataService) { }
+   public navCtrl:Router, private parkingData:ParkingDataService) {
+
+
+    
+    }
 
   ngOnInit():void {
     this.initMap();
+
+
     this.getCurrenposition();
+
+
+  }
+  ngAfterContentInit() 
+  {
+   
+    this.getAllParkingSpaces();
+
+
+    (async () => { 
+
+
+      await this.delay(1000);
+
+      this.filterParkingSpaces();
+  })();
+
+
 
   }
 
+
+public  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
   /**
    * Method that initialize map and display it in the div tag by @ViewChild 
@@ -85,16 +116,6 @@ private getCurrenposition():void{
 } else {
    console.log("No support for geolocation")
 }
-
-  /*
-  this.geolocation.getCurrentPosition().then((resp) => {
-    this.latitude=  resp.coords.latitude,
-  this.longitude= resp.coords.longitude
-
-  
-   }).catch((error) => {
-     console.log('Error getting location', error);
-   });*/
 }
  
 
@@ -104,13 +125,20 @@ private getCurrenposition():void{
 
   //GET ALL PARKING SPACE FROM THE FIREBASE API
   
-private getAllParkingSpaces():void{
+public getAllParkingSpaces():void{
   this.DbUtil.getAllParkingSpaces().toPromise().then(data=>{
 
     this.parking_spaces_List=data as IParkSpaces[];
-    
+ 
+  
   })
+
+ 
+
+ 
 }
+
+
 
 /**
  * 
@@ -119,7 +147,8 @@ private getAllParkingSpaces():void{
  */
 searchParking(ev: any) {
   // 
-  this.getAllParkingSpaces()
+  this.getUniqueSpaces();
+
   let location:string;
   
   // set val to the value of the searchbar
@@ -127,7 +156,7 @@ searchParking(ev: any) {
 
   // if the value is an empty string don't filter the Members
   if (this.searchInput && this.searchInput.trim() != '') {
-    this.parking_spaces_List= this.parking_spaces_List.filter((space) => {
+    this.unique_parking_spaces_List= this.unique_parking_spaces_List.filter((space) => {
       location= space.location;
       return (location.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1);
     })
@@ -135,17 +164,50 @@ searchParking(ev: any) {
 }//END OF GET MEMBER
 
 
-loadParkingAreas(parkingSpace={} as IParkSpaces): void{
+   public loadParkingAreas(parkingSpace={} as IParkSpaces): void{
 
 
- this.navCtrl.navigateByUrl('/menu/parking-areas');
- console.log("button works")
- this.parkingData.setParkingData(parkingSpace)
-
- 
+    this.navCtrl.navigateByUrl('/menu/parking-areas');
+    this.parkingData.setParkingData(parkingSpace)//Send the object clicked on so i can know which location the user wants to see.
 
 
-}
+
+    }
+
+
+
+    /**
+     * This method remove the duplicated location in the parking spaces
+     * So the ngFor don't repeat the duplicate location and just display one suggestion.
+     */
+    public filterParkingSpaces():void{
+      var obj = {};
+     let len=this.parking_spaces_List.length; 
+
+      for ( var i=0; i < len; i++ )
+         obj[this.parking_spaces_List[i]['location']] = this.parking_spaces_List[i];
+      
+       //  this.unique_parking_spaces_List= new Array();
+      for ( var key in obj )
+      this.unique_parking_spaces_List.push(obj[key]);
+
+
+  }
+
+
+
+
+  /**
+   * In order for the filter to work properly, 
+   * The object being filtered must be flushed and reupdated on every click.
+   */
+  public getUniqueSpaces():void{
+    this.unique_parking_spaces_List = [];
+
+    this.filterParkingSpaces();
+  }
+
+
 
 
 }

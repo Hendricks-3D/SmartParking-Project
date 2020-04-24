@@ -9,6 +9,7 @@ export class ParkingDataService {
   private parkingArea = {} as IParkSpaces;
 
 
+
   constructor() { }
 
 
@@ -22,4 +23,8 @@ export class ParkingDataService {
 
     return this.parkingArea;
   }
+
+
+
+
 }

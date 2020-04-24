@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'parking-areas',
     loadChildren: () => import('./Pages/parking-areas/parking-areas.module').then( m => m.ParkingAreasPageModule)
+  },
+  {
+    path: 'book-parking',
+    loadChildren: () => import('./Pages/book-parking/book-parking.module').then( m => m.BookParkingPageModule)
   }
 ];
 

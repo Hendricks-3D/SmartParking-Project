@@ -41,6 +41,11 @@ const routes: Routes = [
         path: 'parking-areas',
         
         loadChildren: '../parking-areas/parking-areas.module#ParkingAreasPageModule'
+      },
+      {
+        path: 'book-parking',
+        
+        loadChildren: '../book-parking/book-parking.module#BookParkingPageModule'
       }
     ]
   },

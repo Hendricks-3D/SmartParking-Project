@@ -6,7 +6,7 @@ import { IParkSpaces } from '../Interfaces/ipark-spaces';
 })
 export class DbUtilityService {
 
-  private getAllSpaces:string = `http://localhost:5001/smartparkingproject-51b95/us-central1/app/api/readSpaces`;
+  private getUrl:string = `http://localhost:5001/smartparkingproject-51b95/us-central1/app/api/readSpaces`;
 
 
   constructor(private http: HttpClient) { }
@@ -14,7 +14,7 @@ export class DbUtilityService {
 
 
   public getAllParkingSpaces(){
-    return this.http.get(this.getAllSpaces);
+    return this.http.get(this.getUrl);
     
     /*.toPromise().then(data=>{
       console.log(data);

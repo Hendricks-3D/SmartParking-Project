@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ParkingDataService } from 'src/app/Services/Data/parking-data.service';
+import { IParkSpaces } from 'src/app/Interfaces/ipark-spaces';
 
 @Component({
   selector: 'app-book-parking',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookParkingPage implements OnInit {
 
-  constructor() { }
+  private parkingSpace:IParkSpaces;
+
+
+  constructor(private parkingData:ParkingDataService) { 
+
+    this.parkingSpace = parkingData.getParkingData();
+  }
 
   ngOnInit() {
   }

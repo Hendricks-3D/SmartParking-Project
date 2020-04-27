@@ -3,10 +3,11 @@ import { MapBoxService,Feature } from 'src/app/Services/map-box.service';
 import {Component,OnInit, ViewChild} from '@angular/core';
 import { DbUtilityService } from 'src/app/Services/db-utility.service';
 import { IParkSpaces } from 'src/app/Interfaces/ipark-spaces';
-
 import { ParkingDataService } from 'src/app/Services/Data/parking-data.service';
 import { Router } from '@angular/router';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertController } from '@ionic/angular';
 
 
 
@@ -30,10 +31,16 @@ export class SmartParkingHomePage implements OnInit {
    latitude:any;
    longitude:any;
 
+   //GOOGLE MAPS VARIABLES THAT ALLOWS DIRECTION BETWEEN TWO POINTS
+   directionsService = new google.maps.DirectionsService();
+   directionsRenderer = new google.maps.DirectionsRenderer();
+
+
+   public geolocation = new Geolocation;
    public parking_spaces_List:IParkSpaces[] =[];
    public prev:IParkSpaces;
    public cur:IParkSpaces;
-  public index = 0;
+   public index = 0;
    public unique_parking_spaces_List:IParkSpaces[] =[];//This variable stores all parking spaces with unique location
    
     public searchInput:string='';//stores user input from the search bar
@@ -44,23 +51,34 @@ export class SmartParkingHomePage implements OnInit {
 
 
   constructor(private mapboxService:MapBoxService,private DbUtil:DbUtilityService,
-   public navCtrl:Router, private parkingData:ParkingDataService) {
+   public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController) {
 
 
     
     }
 
   ngOnInit():void {
-    this.initMap();
 
-
+    //GET CURRENT LOCATION THEN LOAD MAP AFTERNDELAU
     this.getCurrenposition();
 
 
+
+    (async () => { 
+
+
+      await this.delay(3000);
+
+      this.initMap();
+  })();
+
   }
+
+
+
   ngAfterContentInit() 
   {
-   
+   //GET  ALL PARKING SPACE FROM API THEN FILTER IT TO REMOVE DUPLICATE LOCATIONS
     this.getAllParkingSpaces();
 
 
@@ -86,7 +104,7 @@ public  delay(ms: number) {
    */
   initMap() {
 
-  let latlng = new google.maps.LatLng(18.1096,77.2975);
+  let latlng = new google.maps.LatLng(this.latitude,this.longitude);
     //MAP OPTIONS
     let mapOptions={
       center:latlng,
@@ -94,10 +112,37 @@ public  delay(ms: number) {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-
+ 
     this.map = new google.maps.Map(this.mapElement.nativeElement,mapOptions);//CREATE MAP WITH PRESET OPTIONS
 
-      
+      //CREATE MAP MARKER
+      let marker = new google.maps.Marker({
+        position: latlng,
+        map: this.map
+      }); 
+
+      this.directionsRenderer.setMap(this.map);
+  }//END OIF INTIALIZE MAP METHOD
+
+
+
+
+  public calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    directionsService.route(
+        {
+          origin: new google.maps.LatLng(this.latitude,this.longitude),
+          destination: new google.maps.LatLng(this.parkingData.getParkingData().latitude,this.parkingData.getParkingData().longitude),
+          travelMode: 'DRIVING'
+        },
+        function(response, status) {
+          if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+
+            console.log("Navigation started with ok Status")
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
   }
 
 
@@ -106,16 +151,21 @@ public  delay(ms: number) {
   */
 private getCurrenposition():void{
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position)=>{
-      this.longitude = position.coords.longitude;
-      this.latitude= position.coords.latitude;
-      
-      console.log("latLng: "+this.latitude,this.longitude);
-    });
-} else {
-   console.log("No support for geolocation")
-}
+
+
+  
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position)=>{
+          this.longitude = parseFloat(position.coords.longitude.toFixed(4));
+          this.latitude= parseFloat(position.coords.latitude.toFixed(4));
+          
+          console.log("latLng: "+this.latitude,this.longitude);
+        });
+    } else {
+      console.log("No support for geolocation")
+    }
+
+    
 }
  
 
@@ -167,9 +217,14 @@ searchParking(ev: any) {
    public loadParkingAreas(parkingSpace={} as IParkSpaces): void{
 
 
-    this.navCtrl.navigateByUrl('/menu/parking-areas');
+    
     this.parkingData.setParkingData(parkingSpace)//Send the object clicked on so i can know which location the user wants to see.
 
+ 
+
+      this.presentAlertConfirm()
+
+      this.searchInput = '';
 
 
     }
@@ -207,6 +262,41 @@ searchParking(ev: any) {
     this.filterParkingSpaces();
   }
 
+
+
+
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: '',
+      message: 'Would you like to navigate or park?',
+      buttons: [
+        {
+          text: 'Park',
+          
+          cssClass: 'secondary',
+          handler: (park) => {
+            this.navCtrl.navigateByUrl('/menu/parking-areas');
+          }
+        }, {
+          text: 'Navigate',
+          handler: () => {
+
+
+              //CREATE MAP MARKER
+              let marker = new google.maps.Marker({
+                position: new google.maps.LatLng(this.parkingData.getParkingData().latitude,this.parkingData.getParkingData().longitude),
+                map: this.map
+              }); 
+               //LOAD DIRECTION
+              this.calculateAndDisplayRoute(this.directionsService,this.directionsRenderer);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 
 

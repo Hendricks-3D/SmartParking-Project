@@ -1,33 +1,39 @@
+<!-- Default back button -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Book Parking</ion-title>
-
-    <!-- Side menu button -->
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 
 
+
 <ion-content>
 
-  <IonItem>
-    <IonLabel position="fixed">Parking Slot code</IonLabel>
-    <IonInput value={text}></IonInput>
-  </IonItem>
+  <ion-item>
+    <ion-label position="stacked">Parking Slot Code</ion-label>
+    <ion-input> {{parkingSpace.code}}</ion-input>
+  </ion-item>
 
 
-  <IonItem>
-    <IonLabel position="fixed">Time in</IonLabel>
-    <IonInput value={text}></IonInput>
-  </IonItem>
+  <ion-item>
+    <ion-label position="stacked">Time In</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
 
-  <IonItem>
-    <IonLabel position="fixed">License Plate Number</IonLabel>
-    <IonInput value={text}></IonInput>
-  </IonItem>
+  <ion-item>
+    <ion-label position="stacked">License Plate Number</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
 
 </ion-content>
+
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="medium"  expand="full">Next</ion-button>
+  </ion-toolbar>
+</ion-footer>

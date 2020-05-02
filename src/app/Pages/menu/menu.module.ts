@@ -46,6 +46,31 @@ const routes: Routes = [
         path: 'book-parking',
         
         loadChildren: '../book-parking/book-parking.module#BookParkingPageModule'
+      },
+      {
+        path: 'add-payment-method',
+        
+        loadChildren: '../add-payment-method/add-payment-method.module#AddPaymentMethodPageModule'
+      },
+      {
+        path: 'add-master',
+        
+        loadChildren: '../add-master-card/add-master-card.module#AddMasterCardPageModule'
+      },
+      {
+        path: 'add-visa',
+        
+        loadChildren: '../add-visa-card/add-visa-card.module#AddVisaCardPageModule'
+      },
+      {
+        path: 'add-paypal',
+        
+        loadChildren: '../add-paypal/add-paypal.module#AddPaypalPageModule'
+      },
+      {
+        path: 'add-upay',
+        
+        loadChildren: '../add-upay/add-upay.module#AddUpayPageModule'
       }
     ]
   },

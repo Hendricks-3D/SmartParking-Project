@@ -11,22 +11,26 @@
 
 
 <ion-content>
+     <div class="container">
+        <div class="items">
+          <ion-label position="stacked">Parking Slot Code</ion-label>
+          <ion-input  [(ngModel)]="driver.parkingCode" readonly> {{parkingSpace.code}}</ion-input>
+        </div>
 
-  <ion-item>
-    <ion-label position="stacked">Parking Slot Code</ion-label>
-    <ion-input> {{parkingSpace.code}}</ion-input>
-  </ion-item>
 
+        <div  class="items">
+          <ion-label position="stacked">Time In</ion-label>
+          <ion-input [(ngModel)]="driver.sentTime" readonly></ion-input>
+        </div>
 
-  <ion-item>
-    <ion-label position="stacked">Time In</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
+        <div  class="items">
+          <ion-label position="stacked">License Plate Number</ion-label>
+          <ion-input [(ngModel)]="driver.license"></ion-input>
 
-  <ion-item>
-    <ion-label position="stacked">License Plate Number</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
+        </div>
+
+     </div>
+
 
 </ion-content>
 
@@ -34,6 +38,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button color="medium"  expand="full">Next</ion-button>
+    <ion-button color="medium"  expand="full" (click)="goToPaymentMethod()">Next</ion-button>
   </ion-toolbar>
 </ion-footer>

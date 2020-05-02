@@ -17,6 +17,26 @@ const routes: Routes = [
   {
     path: 'book-parking',
     loadChildren: () => import('./Pages/book-parking/book-parking.module').then( m => m.BookParkingPageModule)
+  },
+  {
+    path: 'add-payment-method',
+    loadChildren: () => import('./Pages/add-payment-method/add-payment-method.module').then( m => m.AddPaymentMethodPageModule)
+  },
+  {
+    path: 'add-paypal',
+    loadChildren: () => import('./Pages/add-paypal/add-paypal.module').then( m => m.AddPaypalPageModule)
+  },
+  {
+    path: 'add-visa-card',
+    loadChildren: () => import('./Pages/add-visa-card/add-visa-card.module').then( m => m.AddVisaCardPageModule)
+  },
+  {
+    path: 'add-upay',
+    loadChildren: () => import('./Pages/add-upay/add-upay.module').then( m => m.AddUpayPageModule)
+  },
+  {
+    path: 'add-master-card',
+    loadChildren: () => import('./Pages/add-master-card/add-master-card.module').then( m => m.AddMasterCardPageModule)
   }
 ];
 

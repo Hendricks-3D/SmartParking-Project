@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+
+      <!-- Default back button -->
+
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title>New Payment Method</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<ion-content>
+
+  <div>
+     <ion-label>Choose a payment method</ion-label>
+  </div>
+   
+
+
+
+
+  <ion-grid>
+    <ion-row>
+        <ion-col col-12 col-md-12 col-xl-12>
+  
+          <ion-card   class="card" (click)="addPaypal()">
+            <ion-item>
+        
+              <ion-card-content>
+              <ion-img [src]="paypal"></ion-img>
+              </ion-card-content>
+            </ion-item>
+          </ion-card>
+
+
+
+          <ion-card   class="card" (click)="addVisaCard()">
+            <ion-item>
+        
+              <ion-card-content>
+              <ion-img [src]="visa"></ion-img>
+              </ion-card-content>
+            </ion-item>
+          </ion-card>
+
+
+          <ion-card   class="card" (click)="addMasterCard()">
+            <ion-item>
+        
+              <ion-card-content>
+                <ion-img [src]="master">
+
+              </ion-img></ion-card-content>
+              
+            </ion-item>
+          </ion-card>
+
+
+          <ion-card   class="card" (click)="addUpay()">
+            <ion-item>
+        
+              <ion-card-content>
+              <ion-label>UPAY</ion-label>
+              </ion-card-content>
+            </ion-item>
+          </ion-card>
+  
+        </ion-col>
+  
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

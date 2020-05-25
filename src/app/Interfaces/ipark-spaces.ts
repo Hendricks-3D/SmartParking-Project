@@ -1,7 +1,7 @@
 export interface IParkSpaces {
 
   
-     
+        id:string;
         code:string;
         price:number;//price per hour
         status:string;

@@ -9,7 +9,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
-
+import { PayPal } from '@ionic-native/paypal/ngx';
 
 
 @NgModule({
@@ -20,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
     StatusBar,
     SplashScreen,
     Geolocation,
+    PayPal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

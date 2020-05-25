@@ -43,6 +43,8 @@ export class SmartParkingHomePage implements OnInit {
    public index = 0;
    public unique_parking_spaces_List:IParkSpaces[] =[];//This variable stores all parking spaces with unique location
    
+   public date1= new Date('Fri May 01 2020 19:59:05');
+   public date2 = new Date('Fri May 01 2020 13:59:05');
     public searchInput:string='';//stores user input from the search bar
 
   addresses: string[] = [];
@@ -54,8 +56,23 @@ export class SmartParkingHomePage implements OnInit {
    public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController) {
 
 
+    console.log(this.diff_hours(this.date1,this.date2));
+
     
     }
+
+
+
+
+//Method that calculate the difference between time in and time out
+public diff_hours(dt2, dt1) 
+ {
+
+  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= (60 * 60);
+  return Math.abs(Math.round(diff));
+  
+ }
 
   ngOnInit():void {
 
@@ -70,6 +87,8 @@ export class SmartParkingHomePage implements OnInit {
       await this.delay(3000);
 
       this.initMap();
+      await this.delay(5000);
+      this.calculateParkingLocationDistance();
   })();
 
   }
@@ -108,7 +127,7 @@ public  delay(ms: number) {
     //MAP OPTIONS
     let mapOptions={
       center:latlng,
-      zoom:12,
+      zoom:15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -118,7 +137,8 @@ public  delay(ms: number) {
       //CREATE MAP MARKER
       let marker = new google.maps.Marker({
         position: latlng,
-        map: this.map
+        map: this.map,
+        label:"me"
       }); 
 
       this.directionsRenderer.setMap(this.map);
@@ -150,8 +170,6 @@ public  delay(ms: number) {
    * Method that gets user location
   */
 private getCurrenposition():void{
-
-
 
   
       if (navigator.geolocation) {
@@ -247,9 +265,9 @@ searchParking(ev: any) {
       this.unique_parking_spaces_List.push(obj[key]);
 
 
+ 
+
   }
-
-
 
 
   /**
@@ -265,6 +283,66 @@ searchParking(ev: any) {
 
 
 
+  /**
+   * calculateParkingLocationDistance
+   * Method that will loop through the filtered list 
+   * and get the latitude and longitude values of all unique locations.
+   * The distance from the current location to the oarking location will be calculated 
+   * then display the closest ones.
+   */
+
+  
+
+   public calculateParkingLocationDistance():void{
+
+
+    let len=this.unique_parking_spaces_List.length; 
+    console.log("length = "+len);
+
+      for ( var i=0; i < len; i++ ){
+
+  
+          
+        var R = 6378.137; // Radius of earth in KM
+        var dLat = this.latitude* Math.PI / 180 - parseInt(this.unique_parking_spaces_List[i].latitude)* Math.PI / 180;
+        var dLon =  this.longitude * Math.PI / 180 - parseInt(this.unique_parking_spaces_List[i].longitude) * Math.PI / 180;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(this.latitude* Math.PI / 180) * Math.cos( parseInt(this.unique_parking_spaces_List[i].latitude)* Math.PI / 180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var distance = R * c;
+
+       
+         
+          if (distance <40)//the formula isnt accurate when compare to google maps but this 40 represents 700 meters
+          {
+
+
+            //create markers
+              //CREATE MAP MARKER
+              let marker = new google.maps.Marker({
+                position: new google.maps.LatLng(this.unique_parking_spaces_List[i].latitude,this.unique_parking_spaces_List[i].longitude),
+                map: this.map,
+                label:this.unique_parking_spaces_List[i].location
+              }); 
+
+
+
+              marker.addListener('click', function() {
+                 this.parkingData.setParkingData(this.unique_parking_spaces_List[i]);
+                this.navCtrl.navigateByUrl('/menu/book-parking');
+              });
+          }
+      
+
+        }//End for
+
+
+   }
+
+  public deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({

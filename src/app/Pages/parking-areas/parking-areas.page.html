@@ -18,10 +18,19 @@
   <ion-row>
       <ion-col *ngFor="let space of parking_spaces_List" col-12 col-md-6 col-xl-3>
 
-        <ion-card *ngIf="space.location ===  parkingArea.location"  class="card" (click)="park(space)">
-          <ion-item>
+        <ion-card *ngIf="space.location ===  parkingArea.location"  class="card" >
+
+          <ion-item  *ngIf="space.status ===  'Available'" (click)="park(space)">
       
             <ion-label>{{space.code}}</ion-label>
+          
+        
+          </ion-item>
+
+          <ion-item  *ngIf="space.status ===  'occupy'" >
+      
+            <ion-img [src]="occupyUrl"></ion-img>
+          
         
           </ion-item>
         </ion-card>

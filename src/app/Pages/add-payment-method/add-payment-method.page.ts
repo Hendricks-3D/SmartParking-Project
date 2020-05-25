@@ -21,9 +21,9 @@ export class AddPaymentMethodPage implements OnInit {
 
 
     
-    public addPaypal():void{
+ /*   public addPaypal():void{
       this.router.navigateByUrl('/menu/add-paypal');
-    }
+    }*/
 
 
     public addMasterCard():void{

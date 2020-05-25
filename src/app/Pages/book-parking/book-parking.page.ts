@@ -25,7 +25,7 @@ export class BookParkingPage implements OnInit {
 
   public goToPaymentMethod():void{
 
-    this.driver.id=7;
+    this.driver.id=4;
     this.driver.reciever='Ozeki';
     this.driver.sender='Smart Park Guest';
     this.driver.message = "@Park"+this.driver.license+this.parkingData.getParkingData().code;//concatenate message with parking code and license

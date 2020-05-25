@@ -18,7 +18,7 @@
           
             <ion-searchbar debounce=500  (ionInput)="searchParking($event)"  [(ngModel)]="searchInput"></ion-searchbar>
             <div style="position: absolute; width: 100%; z-index: 999;">
-              <ion-list lines="none"  *ngIf="searchInput.length > 1">
+              <ion-list lines="none"  *ngIf="searchInput.length > 0">
                 <ion-item  *ngFor="let space of unique_parking_spaces_List | customFilter:searchInput"  (click)="loadParkingAreas(space)" >  
 
                   <div >

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class ParkingAreasPage implements OnInit {
 
   public parkingArea:IParkSpaces;
-
+  public occupyUrl='../../../assets/occupy.png'
   public parking_spaces_List:IParkSpaces[] =[];
 
   constructor(private parkingData:ParkingDataService,private DbUtil:DbUtilityService, public navCtrl:Router) { 
@@ -47,10 +47,10 @@ public getAllParkingSpaces():void{
 }
 
 
-public park(data:IParkSpaces):void{
-  
-  this.parkingData.setParkingData(data);
-  this.navCtrl.navigateByUrl('/menu/book-parking');
-}
+    public park(data:IParkSpaces):void{
+      
+      this.parkingData.setParkingData(data);
+      this.navCtrl.navigateByUrl('/menu/book-parking');
+    }
 
 }

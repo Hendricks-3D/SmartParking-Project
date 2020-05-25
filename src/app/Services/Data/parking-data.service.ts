@@ -24,6 +24,7 @@ export class ParkingDataService {
   public setParkingData(newData:IParkSpaces):void{
     this.parkingArea = newData;
 
+    return 
   }
 
 

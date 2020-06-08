@@ -26,6 +26,7 @@ export class ForgetPasswordPage implements OnInit {
     //check if email is valid
         this.fireDBService.sendforgetPasswordEmail(this.email).then(()=>{
 
+          this.fireDBService.presentToast('Please check your email for reset link.');
         }).catch((err)=>{
           //print toast message
             console.log(err);

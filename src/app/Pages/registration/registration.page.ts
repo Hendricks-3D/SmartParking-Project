@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class RegistrationPage implements OnInit {
   
-  private mainDBNodeRef = "smartParking";
+  private mainDBNodeRef = "SmartParkingDB";
   private userNodeRef = "userProfile";
 
   public user = {} as IUser;
@@ -37,17 +37,17 @@ export class RegistrationPage implements OnInit {
    */
   private registerUser():void{
 
-
+        console.log("clicked")
         this.fireDBService.createNewUser(this.user.email,this.password).then(()=>{
         this.afAuth.authState.subscribe((auth) =>{ 
-          
+          console.log("1")
           this.user.uid = auth.uid;//Get user ID from firebase
           console.log("uid saved ");
           //Store user information to the database after specifying the node references.
           this.fireDBService.addNewDataToDB(`${this.mainDBNodeRef}/${this.userNodeRef}/${this.user.uid}`,this.user)
           .then(()=>{
             console.log("user data stored");
-            this.router.navigateByUrl('/main/login');
+            this.router.navigateByUrl('/menu/login');
 
               this.fireDBService.presentToast('Registration as successful!');
           }).catch((err)=>{

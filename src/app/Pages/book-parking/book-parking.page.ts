@@ -7,6 +7,8 @@ import { AlertController } from '@ionic/angular';
 import { DbUtilityService } from 'src/app/Services/db-utility.service';
 import { IPaymentCounter } from 'src/app/Interfaces/ipayment-counter';
 import { IMessageInCounter } from 'src/app/Interfaces/imessage-in-counter';
+import { IUser } from 'src/app/Interfaces/iuser';
+import { FirebaseDBServiceService } from 'src/app/Services/firebase-dbservice.service';
 
 @Component({
   selector: 'app-book-parking',
@@ -20,12 +22,21 @@ export class BookParkingPage implements OnInit {
   public driver = {} as IDriver;
   public date = new Date();
   public messageCounter = {} as IMessageInCounter;
+  
+  public user = {} as IUser;
 
   constructor(private parkingData:ParkingDataService,private router:Router, public alertController: AlertController,
-    private dbUtil:DbUtilityService, ) { 
+    private dbUtil:DbUtilityService, private firebaseDB:FirebaseDBServiceService) { 
 
     this.parkingSpace = parkingData.getParkingData();
     this.driver.sentTime = this.date.toString().slice(0,24);
+
+  
+      this.user = this.firebaseDB.GetCurrentUserData();
+      console.log(this.user);
+
+    
+    
   }
 
   ngOnInit() {

@@ -2,18 +2,49 @@ import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ToastController } from '@ionic/angular';
+import { IUser } from '../Interfaces/iuser';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseDBServiceService {
+  
+  private mainDBNodeRef = "SmartParkingDB";
+  private userNodeRef = "userProfile";
+  private userId ='';
+  public userData = {} as IUser;
 
- 
 
-  constructor(private afAuth:AngularFireAuth,private afDatabase: AngularFireDatabase,public toastController: ToastController) { }
+  constructor(private afAuth:AngularFireAuth,private afDatabase: AngularFireDatabase,public toastController: ToastController) { 
+
+  }
 
 
+
+    /**
+   * This method gets the current user data from firebase and return it as 
+   * User type.
+   */
+  public GetCurrentUserData(): IUser {
+
+    this.afAuth.authState.subscribe(auth=>{
+
+
+      this.afDatabase.object(`${this.mainDBNodeRef}/${this.userNodeRef}/${auth.uid}`).snapshotChanges().subscribe(data=>{
+        this.userData = data.payload.val() as IUser;
+
+      localStorage.setItem('user',JSON.stringify(this.userData))
+    })
+
+    })
+    
+    
+this.userData = JSON.parse(localStorage.getItem('user'));
+
+    console.log(this.userData);
+      return this.userData;
+  }
 
    /**
    * Method that creates toast messages

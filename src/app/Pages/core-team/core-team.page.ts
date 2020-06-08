@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoreTeamPage implements OnInit {
 
+  public markUrl='../../../assets/mark.png';
+  public odainUrl='../../../assets/odain.png'
+  public juleenUrl='../../../assets/juleen.png'
+  public roshUrl='../../../assets/rosh.png'
+
   constructor() { }
 
   ngOnInit() {

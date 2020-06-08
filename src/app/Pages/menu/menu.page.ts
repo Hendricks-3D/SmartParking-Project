@@ -9,7 +9,7 @@ import { Router, RouterEvent } from '@angular/router';
 export class MenuPage implements OnInit {
 
   activePath = '';
-
+   theme='light'
   pages = [
 
 
@@ -42,6 +42,16 @@ export class MenuPage implements OnInit {
     {
       name: 'Privacy Policy',
       path: '/menu/privacy'
+    },
+
+    {
+      name: 'Login',
+      path: '/menu/login'
+    },
+
+    {
+      name: 'Create Account',
+      path: '/menu/registration'
     }
   ]
 
@@ -52,5 +62,41 @@ export class MenuPage implements OnInit {
   }
 
   ngOnInit() {
+
+
+          // Use matchMedia to check the user preference
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+           // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+           this.toggleDarkTheme(prefersDark.matches);
+
+          // Listen for changes to the prefers-color-scheme media query
+          prefersDark.addListener((mediaQuery) => {
+
+            console.log(mediaQuery)
+            this.toggleDarkTheme(mediaQuery.matches);
+
+          } );
+       
+      
   }
+
+    // Add or remove the "dark" class based on if the media query matches
+    private toggleDarkTheme(shouldAdd) {
+      document.body.classList.toggle('dark', shouldAdd);
+    }
+
+    public changeTheme():void
+    {
+        if(this.theme='light'){
+          document.body.classList.add('dark');
+          this.theme='dark'
+
+        }else
+        {
+          document.body.classList.remove('dark');
+          this.theme='light'
+        }
+    }
+
 }

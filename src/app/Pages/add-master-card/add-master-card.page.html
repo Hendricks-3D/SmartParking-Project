@@ -14,4 +14,45 @@
 
 <ion-content>
 
+  <ion-input placeholder="Card Number"  [(ngModel)]="cardNumber"></ion-input>
+
+  <ion-input placeholder="Card Holder's Name"  [(ngModel)]="holderName"></ion-input>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <ion-item>
+          <ion-label>MMMM</ion-label>
+          <ion-datetime displayFormat="MMMM" value="2012-12-15T13:47:20.789" [(ngModel)]="payment.month"></ion-datetime>
+        </ion-item>
+
+      </ion-col>
+
+      <ion-col>
+
+        <ion-item>
+          <ion-label>YYYY</ion-label>
+          <ion-datetime [pickerOptions]="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="1981" max="2002"  [(ngModel)]="payment.year"></ion-datetime>
+        </ion-item>
+
+      </ion-col>
+
+      <ion-col>
+        <ion-input placeholder="cvv" class="cvv"  [(ngModel)]="payment.cvv"></ion-input>
+      </ion-col>
+
+    </ion-row>
+
+    </ion-grid>
+
+
+
+
+
+
+
+  <ion-button color="secondary" shape="round" (click)="addVisa()">Next Step</ion-button>
+
 </ion-content>

@@ -25,11 +25,14 @@ declare var google;
 export class SmartParkingHomePage implements OnInit {
   @ViewChild("map",{ static: true }) mapElement;
   //DECLARATIONS
- 
+ // Use matchMedia to check the user preference
+    
+
+
   
    map: any;
-   latitude:any;
-   longitude:any;
+   latitude = 18.1096;
+   longitude= -77.2975;
 
    //GOOGLE MAPS VARIABLES THAT ALLOWS DIRECTION BETWEEN TWO POINTS
    directionsService = new google.maps.DirectionsService();
@@ -56,10 +59,13 @@ export class SmartParkingHomePage implements OnInit {
    public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController) {
 
 
+
     console.log(this.diff_hours(this.date1,this.date2));
 
     
     }
+
+
 
 
 
@@ -77,7 +83,7 @@ public diff_hours(dt2, dt1)
   ngOnInit():void {
 
     //GET CURRENT LOCATION THEN LOAD MAP AFTERNDELAU
-    this.getCurrenposition();
+   // this.getCurrenposition();
 
 
 
@@ -122,13 +128,15 @@ public  delay(ms: number) {
    * Method that initialize map and display it in the div tag by @ViewChild 
    */
   initMap() {
+//new google.maps.LatLng(this.latitude,this.longitude);
 
-  let latlng = new google.maps.LatLng(this.latitude,this.longitude);
+  let latlng =new google.maps.LatLng(this.latitude,this.longitude);
     //MAP OPTIONS
     let mapOptions={
       center:latlng,
       zoom:15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
     };
 
  
@@ -142,6 +150,8 @@ public  delay(ms: number) {
       }); 
 
       this.directionsRenderer.setMap(this.map);
+
+ 
   }//END OIF INTIALIZE MAP METHOD
 
 
@@ -232,10 +242,9 @@ searchParking(ev: any) {
 }//END OF GET MEMBER
 
 
+
    public loadParkingAreas(parkingSpace={} as IParkSpaces): void{
 
-
-    
     this.parkingData.setParkingData(parkingSpace)//Send the object clicked on so i can know which location the user wants to see.
 
  
@@ -290,11 +299,8 @@ searchParking(ev: any) {
    * The distance from the current location to the oarking location will be calculated 
    * then display the closest ones.
    */
-
-  
-
    public calculateParkingLocationDistance():void{
-
+    let marker;
 
     let len=this.unique_parking_spaces_List.length; 
     console.log("length = "+len);
@@ -320,30 +326,41 @@ searchParking(ev: any) {
 
             //create markers
               //CREATE MAP MARKER
-              let marker = new google.maps.Marker({
+                marker = new google.maps.Marker({
                 position: new google.maps.LatLng(this.unique_parking_spaces_List[i].latitude,this.unique_parking_spaces_List[i].longitude),
                 map: this.map,
-                label:this.unique_parking_spaces_List[i].location
+                label:this.unique_parking_spaces_List[i].location,
+                
               }); 
+           
+              google.maps.event.addListener(marker,"click",function() {
+                console.log("working")
+                this.parkingData.setParkingData(this.unique_parking_spaces_List[i]);
 
-
-
-              marker.addListener('click', function() {
-                 this.parkingData.setParkingData(this.unique_parking_spaces_List[i]);
-                this.navCtrl.navigateByUrl('/menu/book-parking');
-              });
+              })  
+             
           }
       
 
         }//End for
+  
+
+   }
 
 
+   public markerClickevent(space:IParkSpaces):void{
+    console.log("working")
+    this.parkingData.setParkingData(space);
+    
+   // this.navCtrl.navigateByUrl('/menu/book-parking');
    }
 
   public deg2rad(deg) {
     return deg * (Math.PI/180)
   }
 
+
+  
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: '',

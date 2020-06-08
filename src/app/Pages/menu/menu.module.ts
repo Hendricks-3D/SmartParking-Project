@@ -71,6 +71,16 @@ const routes: Routes = [
         path: 'add-upay',
         
         loadChildren: '../add-upay/add-upay.module#AddUpayPageModule'
+      },
+      {
+        path: 'login',
+        
+        loadChildren: '../login/login.module#LoginPageModule'
+      },
+      {
+        path: 'registration',
+        
+        loadChildren: '../registration/registration.module#RegistrationPageModule'
       }
     ]
   },

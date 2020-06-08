@@ -37,6 +37,14 @@ const routes: Routes = [
   {
     path: 'add-master-card',
     loadChildren: () => import('./Pages/add-master-card/add-master-card.module').then( m => m.AddMasterCardPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./Pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'registration',
+    loadChildren: () => import('./Pages/registration/registration.module').then( m => m.RegistrationPageModule)
   }
 ];
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IPaymentInfo } from 'src/app/Interfaces/ipayment-info';
 
 @Component({
   selector: 'app-add-master-card',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddMasterCardPage implements OnInit {
 
+  public payment = {} as IPaymentInfo;
   constructor() { }
 
   ngOnInit() {

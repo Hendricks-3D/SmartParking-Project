@@ -1,5 +1,5 @@
 {
-  "name": "SmartParking",
+  "name": "smartparking",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@angular/common": "~8.2.14",
     "@angular/core": "~8.2.14",
+    "@angular/fire": "^6.0.0",
     "@angular/forms": "~8.2.14",
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
@@ -30,6 +31,7 @@
     "cordova-android": "8.1.0",
     "cordova-res": "^0.14.0",
     "core-js": "^2.5.4",
+    "firebase": "^7.15.0",
     "native-run": "^1.0.0",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
@@ -84,5 +86,7 @@
     "platforms": [
       "android"
     ]
-  }
+  },
+  "main": "karma.conf.js",
+  "license": "ISC"
 }

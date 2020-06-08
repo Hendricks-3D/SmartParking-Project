@@ -8,6 +8,17 @@ export const environment = {
   mapbox:{
     accessToken: 'pk.eyJ1IjoiaGVuZHJ4IiwiYSI6ImNrOHh2eDNhdDBycXgzZW9lcDg5MTh0dW4ifQ.sYc2qA8MF3ncRzq9ccZcXw'
   
+  },
+
+  firebase:{
+    apiKey: "AIzaSyBVhmgEOCvNXUl9LmoN69Es80qiO4c0eHM",
+    authDomain: "smartparkingproject-51b95.firebaseapp.com",
+    databaseURL: "https://smartparkingproject-51b95.firebaseio.com",
+    projectId: "smartparkingproject-51b95",
+    storageBucket: "smartparkingproject-51b95.appspot.com",
+    messagingSenderId: "584379355625",
+    appId: "1:584379355625:web:9bfc74112ecea495d9fb78",
+    measurementId: "G-QNJNJL985L"
   }
     
   

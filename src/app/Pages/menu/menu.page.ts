@@ -47,11 +47,6 @@ export class MenuPage implements OnInit {
     {
       name: 'Login',
       path: '/menu/login'
-    },
-
-    {
-      name: 'Create Account',
-      path: '/menu/registration'
     }
   ]
 

@@ -10,7 +10,7 @@
 
         <!-- Side menu button -->
         <ion-buttons slot="end" (click)="goToAddPayment()">
-          <ion-icon name="add-outline"></ion-icon>
+         
         </ion-buttons>
 
   </ion-toolbar>
@@ -19,28 +19,30 @@
 
 
 <ion-content padding>
+
+  <div>
+    <h2> Smart Parking</h2>
+</div>
+
+
   <ion-list>
       <ion-item>
-          <ion-input class="input" type="license" placeholder="License Plate No." ></ion-input>
+          <ion-input class="input" type="license" placeholder="License Plate No." [(ngModel)]="user.license"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input class="input" type="name" placeholder="Full Name" ></ion-input>
+        <ion-input class="input" type="name" placeholder="Full Name" [(ngModel)]="user.fullName"></ion-input>
     </ion-item>
 
 
     <ion-item>
-      <ion-input class="input" type="email" placeholder="Email" ></ion-input>
+      <ion-input class="input" type="email" placeholder="Email" [(ngModel)]="user.email"></ion-input>
   </ion-item> 
 
       <ion-item>
-          <ion-input type="password" class="input" placeholder="Password" ></ion-input>
+          <ion-input type="password" class="input" placeholder="Password" [(ngModel)]="password"></ion-input>
       </ion-item>
 
-
-      <ion-item>
-        <ion-input type="password" class="input" placeholder="Confirm Password" ></ion-input>
-    </ion-item>
 
 
   </ion-list>

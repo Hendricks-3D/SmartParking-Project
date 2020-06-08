@@ -81,7 +81,14 @@ const routes: Routes = [
         path: 'registration',
         
         loadChildren: '../registration/registration.module#RegistrationPageModule'
-      }
+      },
+
+      {
+        path: 'forget-password',
+        
+        loadChildren: '../forget-password/forget-password.module#ForgetPasswordPageModule'
+      },
+      
     ]
   },
   {

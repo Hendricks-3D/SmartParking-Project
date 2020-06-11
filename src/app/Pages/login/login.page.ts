@@ -12,7 +12,7 @@ export class LoginPage implements OnInit {
 
   private email:string;// Stores user email from login input field
   private password:string;//stores user's password from login screen
-
+  public logoUrl='../../../assets/logo.png'
 
 
 

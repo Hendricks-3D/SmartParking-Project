@@ -8,6 +8,7 @@ import { IParkSpaces } from 'src/app/Interfaces/ipark-spaces';
 import { AlertController } from '@ionic/angular';
 import { IDriverPaymentData } from 'src/app/Interfaces/idriver-payment-data';
 import { IPaymentCounter } from 'src/app/Interfaces/ipayment-counter';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 
@@ -61,24 +62,29 @@ export class PaymentsPage implements OnInit {
     this.presentAlert();
 
     this.route.navigateByUrl('/menu/main');
+
+    localStorage.setItem("driver",JSON.stringify(this.driver));
+    localStorage.setItem("area",JSON.stringify(this.spaces));
+
     
   }
 
   public payPalCheckout():void{
-    this.payPal.init({
-      PayPalEnvironmentProduction: 'Adh51Y8S9NydPa3uIsIgmBBXlepYs8OeedvOASfQ76s2lH8SwTolCqZHMJD5ezyuk4wyPLpvQrXrBdlO',
-      PayPalEnvironmentSandbox: 'Adh51Y8S9NydPa3uIsIgmBBXlepYs8OeedvOASfQ76s2lH8SwTolCqZHMJD5ezyuk4wyPLpvQrXrBdlO',
 
+    this.payPal.init({
+      PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
+      PayPalEnvironmentSandbox: 'Adh51Y8S9NydPa3uIsIgmBBXlepYs8OeedvOASfQ76s2lH8SwTolCqZHMJD5ezyuk4wyPLpvQrXrBdlO'
     }).then(() => {
       // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
       this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
         // Only needed if you get an "Internal Service Error" after PayPal login!
         //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
       })).then(() => {
-        let payment = new PayPalPayment(this.parkingData.getParkingData().price.toString(), 'JMD', 'Description', 'sale');
+        let payment = new PayPalPayment('150.00', 'USD', 'Parking', 'sale');
         this.payPal.renderSinglePaymentUI(payment).then(() => {
-         console.log('Payment successsful');
+          // Successfully paid
     
+          this.paymentAlert('Successfully paid')
           // Example sandbox response
           //
           // {
@@ -96,19 +102,38 @@ export class PaymentsPage implements OnInit {
           //     "intent": "sale"
           //   }
           // }
-        }, (err) => {
+        }, () => {
           // Error or render dialog closed without being successful
+          this.paymentAlert('Error or render dialog closed without being successful');
         });
-      }, (err) => {
+      }, () => {
         // Error in configuration
+        this.paymentAlert('Error in configuration');
       });
-    }, (err) => {
+    }, () => {
       // Error in initialization, maybe PayPal isn't supported or something else
+      this.paymentAlert('Error in initialization, maybe PayPal is not supported or something else');
     });
   }
 
 
 
+
+  async paymentAlert(message:string) 
+  {
+    const alert = await this.alertController.create({
+      header: 'message',
+      message: ''+message ,
+      buttons: [
+        {
+          text: 'Ok',
+        }
+      
+      ]
+    });
+
+    await alert.present();
+  }
 
   async presentAlert() 
   {

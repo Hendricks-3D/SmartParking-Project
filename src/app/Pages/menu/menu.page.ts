@@ -15,39 +15,51 @@ export class MenuPage implements OnInit {
 
     {
       name: 'Home',
-      path: '/menu/main'
+      path: '/menu/main',
+      icon:'home-outline'
     },
-
+    {
+      name: 'Notification',
+      path: '/menu/notification',
+      icon: 'information-outline'
+    },
     {
       name: 'Parking Information',
-      path: '/menu/parking'
+      path: '/menu/parking',
+      icon: 'information-outline'
     },
     {
       name: 'Payments',
-      path: '/menu/payments'
+      path: '/menu/payments',
+      icon:'wallet-outline'
     },
 
     {
       name: 'Core Team',
-      path: '/menu/core-team'
+      path: '/menu/core-team',
+      icon: 'people-outline'
     }
     ,
 
     {
       name: 'Contact Us',
-      path: '/menu/contact-us'
+      path: '/menu/contact-us',
+      icon:'call-outline'
     }
     ,
 
     {
       name: 'Privacy Policy',
-      path: '/menu/privacy'
+      path: '/menu/privacy',
+      icon:'build-outline'
     },
 
     {
       name: 'Login',
-      path: '/menu/login'
-    }
+      path: '/menu/login',
+      icon:'log-in-outline'
+    } ,
+    
   ]
 
   constructor(private router: Router) {

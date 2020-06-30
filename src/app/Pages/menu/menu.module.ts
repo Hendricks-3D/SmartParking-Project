@@ -88,6 +88,11 @@ const routes: Routes = [
         
         loadChildren: '../forget-password/forget-password.module#ForgetPasswordPageModule'
       },
+      {
+        path: 'notification',
+        
+        loadChildren: '../notification/notification.module#NotificationPageModule'
+      },
       
     ]
   },

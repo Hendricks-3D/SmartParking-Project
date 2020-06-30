@@ -9,7 +9,7 @@ import { IParkSpaces } from '../Interfaces/ipark-spaces';
 import { IDriverPaymentData } from '../Interfaces/idriver-payment-data';
 import { IMessageInCounter } from '../Interfaces/imessage-in-counter';
 import { IPaymentCounter } from '../Interfaces/ipayment-counter';
-import { ConditionalExpr } from '@angular/compiler';
+import { IWatch } from '../Interfaces/iwatch';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,13 @@ export class DbUtilityService {
   private pushmessageIn = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/createMessageIn`;
   private updateParkingSpaceUrl = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/updateSpace`
   private pushPaymentDetails = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/createPayment`;
-
+  private watchListUrl = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/addToWatchList`;
 
   //message in counterlinks
   private messageInCounterUrl = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/messageInCounter/1`;
 
   private paymentCounterUrl = `https://us-central1-smartparkingproject-51b95.cloudfunctions.net/app/api/paymentCounter/1`;
+
 
   constructor(private http: HttpClient) { }
 
@@ -93,7 +94,7 @@ export class DbUtilityService {
 
         this.http.put(this.messageInCounterUrl,counter).toPromise().then(promise=>{
           console.log("message In counter was updated")
-        });
+        });4
 
     }
 
@@ -118,6 +119,17 @@ export class DbUtilityService {
 
     }
 
+
+    //ADD DATA TO WATCH LIST
+      //Update parking space status from available to occupy
+  public addToWatchlist(watch:IWatch)
+  {
+    return this.http.post(this.watchListUrl,watch).toPromise().then(message=>{
+      console.log("payment request was sent")
+    }).catch(err=>{
+      console.log(err);
+    })
+}
 
 
 }

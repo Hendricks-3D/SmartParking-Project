@@ -17,7 +17,7 @@ export class FirebaseDBServiceService {
 
 
   constructor(private afAuth:AngularFireAuth,private afDatabase: AngularFireDatabase,public toastController: ToastController) { 
-
+      this.GetCurrentUserData();
   }
 
 

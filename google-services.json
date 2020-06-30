@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "584379355625",
+    "firebase_url": "https://smartparkingproject-51b95.firebaseio.com",
+    "project_id": "smartparkingproject-51b95",
+    "storage_bucket": "smartparkingproject-51b95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584379355625:android:bab6cff6945c6f2cd9fb78",
+        "android_client_info": {
+          "package_name": "com.ionic.smartParking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584379355625-qkbjj76teun86tdcpcnmffmqs3deo8t1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYD40q3P2pNSoTkq4eecNAKS2nFjOgX38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584379355625-qkbjj76teun86tdcpcnmffmqs3deo8t1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "584379355625-1u0gvphj4jnoe09j0va82225fgn3t82i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ionic.smartParking"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

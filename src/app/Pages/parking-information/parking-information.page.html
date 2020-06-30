@@ -18,19 +18,20 @@
         <ion-col col-12 col-md-12 col-xl-12>
   
 
-          <ion-card   >
-            <ion-card-title>Current Parking Details</ion-card-title>
+          <ion-card >
+            <ion-card-title >Current Parking Details</ion-card-title>
+            <hr>
 
               <ion-card-content>
-              <p>License Plate Number: {{driver.license}}</p>
+              <p> <span>License Plate Number:</span> {{driver.license}}</p>
                 
-              <p>Parking Area:  {{spaces.code}}</p>  
+              <p>  <span>Parking Area:  </span>{{spaces.code}}</p>  
 
-              <p>Parking Location: {{spaces.location}}</p>
+              <p><span>Parking Location: </span>{{spaces.location}}</p>
 
-              <p>Time in: {{driver.sentTime}}</p>
+              <p> <span>Time in:</span> {{driver.sentTime}}</p>
 
-              <p>Time out:</p>
+              <p><span>Time out:</span></p>
               </ion-card-content>
 
               <ion-card-header>

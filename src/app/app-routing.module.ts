@@ -49,7 +49,12 @@ const routes: Routes = [
   {
     path: 'forget-password',
     loadChildren: () => import('./Pages/forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
-  }
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./Pages/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+
 ];
 
 @NgModule({

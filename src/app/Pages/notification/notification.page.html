@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notifications  <ion-badge color="danger">{{length}}</ion-badge></ion-title>
+        <!-- Side menu button -->
+        <ion-buttons slot="start">
+          <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card  *ngFor="let noti of notification">
+        
+
+
+          <ion-card-content >
+            <h5> {{noti.message}}</h5>
+          </ion-card-content>
+
+        
+
+      </ion-card>
+
+</ion-content>

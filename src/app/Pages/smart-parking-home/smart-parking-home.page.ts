@@ -10,7 +10,11 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AlertController } from '@ionic/angular';
 
 
-
+//Notification imports for fcm service
+import {tap} from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
+import { FcmService } from 'src/app/Services/fcm.service';
+import { FirebaseDBServiceService } from 'src/app/Services/firebase-dbservice.service';
 
 declare var google;
 
@@ -32,7 +36,7 @@ export class SmartParkingHomePage implements OnInit {
   
    map: any;
    latitude = 18.1096;
-   longitude= -77.2975;
+   longitude=-77.2975;
 
    //GOOGLE MAPS VARIABLES THAT ALLOWS DIRECTION BETWEEN TWO POINTS
    directionsService = new google.maps.DirectionsService();
@@ -56,7 +60,10 @@ export class SmartParkingHomePage implements OnInit {
 
 
   constructor(private mapboxService:MapBoxService,private DbUtil:DbUtilityService,
-   public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController) {
+   public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController,
+   private fcm:FcmService,
+   private toastCtrl:ToastController,
+   private fireDb:FirebaseDBServiceService) {
 
 
 
@@ -82,8 +89,18 @@ public diff_hours(dt2, dt1)
 
   ngOnInit():void {
 
+   /* this.fcm.getToken();//GetFCM Token for Notification
+
+    this.fcm.listenToNotification().pipe(
+
+      tap(msg=>{
+        this.fireDb.presentToast(msg.body);
+        
+      })
+    ).subscribe();*/
+
     //GET CURRENT LOCATION THEN LOAD MAP AFTERNDELAU
-   // this.getCurrenposition();
+     //this.getCurrenposition();
 
 
 
@@ -128,7 +145,7 @@ public  delay(ms: number) {
    * Method that initialize map and display it in the div tag by @ViewChild 
    */
   initMap() {
-//new google.maps.LatLng(this.latitude,this.longitude);
+   // new google.maps.LatLng(this.latitude,this.longitude);
 
   let latlng =new google.maps.LatLng(this.latitude,this.longitude);
     //MAP OPTIONS
@@ -335,7 +352,8 @@ searchParking(ev: any) {
            
               google.maps.event.addListener(marker,"click",function() {
                 console.log("working")
-                this.parkingData.setParkingData(this.unique_parking_spaces_List[i]);
+                //this.parkingData.setParkingData(this.unique_parking_spaces_List[i]);
+               // this.navCtrl.navigateByUrl('/menu/parking-areas');
 
               })  
              

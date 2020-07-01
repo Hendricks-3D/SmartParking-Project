@@ -14,12 +14,22 @@
         
 
 
-          <ion-card-content >
+          <ion-card-content *ngIf="length!==0" >
             <h5> {{noti.message}}</h5>
           </ion-card-content>
 
         
+        
 
       </ion-card>
+
+      <ion-card   *ngIf="length===0" >
+
+        <ion-card-content>
+          <h5> No notifications available</h5>
+        </ion-card-content>
+      
+
+    </ion-card>
 
 </ion-content>

@@ -10,18 +10,6 @@
 
 <ion-content>
 
-    <ion-card  *ngFor="let noti of notification">
-        
-
-
-          <ion-card-content *ngIf="length!==0" >
-            <h5> {{noti.message}}</h5>
-          </ion-card-content>
-
-        
-        
-
-      </ion-card>
 
       <ion-card   *ngIf="length===0" >
 
@@ -31,5 +19,18 @@
       
 
     </ion-card>
+    
+    <ion-card  *ngFor="let noti of notification">
+        
+
+
+      <ion-card-content *ngIf="length!==0" >
+        <h5> {{noti.message}}</h5>
+      </ion-card-content>
+
+    
+    
+
+  </ion-card>
 
 </ion-content>

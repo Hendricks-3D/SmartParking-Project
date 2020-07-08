@@ -62,7 +62,6 @@ export class SmartParkingHomePage implements OnInit {
   constructor(private mapboxService:MapBoxService,private DbUtil:DbUtilityService,
    public navCtrl:Router, private parkingData:ParkingDataService,public alertController: AlertController,
    private fcm:FcmService,
-   private toastCtrl:ToastController,
    private fireDb:FirebaseDBServiceService) {
 
 
@@ -89,7 +88,7 @@ public diff_hours(dt2, dt1)
 
   ngOnInit():void {
 
-   /* this.fcm.getToken();//GetFCM Token for Notification
+   this.fcm.getToken();//GetFCM Token for Notification
 
     this.fcm.listenToNotification().pipe(
 
@@ -97,7 +96,7 @@ public diff_hours(dt2, dt1)
         this.fireDb.presentToast(msg.body);
         
       })
-    ).subscribe();*/
+    ).subscribe();
 
     //GET CURRENT LOCATION THEN LOAD MAP AFTERNDELAU
      //this.getCurrenposition();

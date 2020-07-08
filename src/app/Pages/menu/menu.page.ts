@@ -21,7 +21,7 @@ export class MenuPage implements OnInit {
     {
       name: 'Notification',
       path: '/menu/notification',
-      icon: 'information-outline'
+      icon: 'notifications-outline'
     },
     {
       name: 'Parking Information',

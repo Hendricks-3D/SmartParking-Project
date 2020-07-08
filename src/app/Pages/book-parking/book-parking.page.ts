@@ -9,6 +9,7 @@ import { IPaymentCounter } from 'src/app/Interfaces/ipayment-counter';
 import { IMessageInCounter } from 'src/app/Interfaces/imessage-in-counter';
 import { IUser } from 'src/app/Interfaces/iuser';
 import { FirebaseDBServiceService } from 'src/app/Services/firebase-dbservice.service';
+import { getMaxListeners } from 'process';
 
 @Component({
   selector: 'app-book-parking',
@@ -33,6 +34,8 @@ export class BookParkingPage implements OnInit {
 
   
       this.user = this.firebaseDB.GetCurrentUserData();
+
+      this.driver.license = this.user.license;
       console.log(this.user);
 
     
@@ -66,7 +69,7 @@ export class BookParkingPage implements OnInit {
   
         this.driver.reciever='Ozeki';
         this.driver.sender='Smart Park Guest';
-        this.driver.message = "@Park"+this.driver.license+this.parkingData.getParkingData().code;//concatenate message with parking code and license
+        this.driver.message = this.driver.license+" parked successful at "+this.parkingData.getParkingData().code+" with smart parking mobile app";//concatenate message with parking code and license
         this.driver.status = "S";
         this.parkingData.setDriverData(this.driver);
         this.router.navigateByUrl('/menu/payments');

@@ -1,6 +1,6 @@
 <!-- Default back button -->
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -27,7 +27,7 @@
 
         <div  class="items">
           <ion-label position="stacked">License Plate Number</ion-label>
-          <ion-input [(ngModel)]="driver.license"></ion-input>
+          <ion-input [(ngModel)]="driver.license">{{user.license}}</ion-input>
 
         </div>
 

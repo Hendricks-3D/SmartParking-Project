@@ -21,6 +21,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 
 
+import {AngularFirestoreModule} from '@angular/fire/firestore'
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,13 +32,15 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-  
+    AngularFirestoreModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Geolocation,
     PayPal,
+    
+  
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

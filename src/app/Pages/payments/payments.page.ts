@@ -17,6 +17,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
   templateUrl: './payments.page.html',
   styleUrls: ['./payments.page.scss'],
 })
+
 export class PaymentsPage implements OnInit {
 
   private driver = {} as IDriver;
@@ -75,33 +76,16 @@ export class PaymentsPage implements OnInit {
       PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
       PayPalEnvironmentSandbox: 'Adh51Y8S9NydPa3uIsIgmBBXlepYs8OeedvOASfQ76s2lH8SwTolCqZHMJD5ezyuk4wyPLpvQrXrBdlO'
     }).then(() => {
-      // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+
       this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
-        // Only needed if you get an "Internal Service Error" after PayPal login!
-        //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+
       })).then(() => {
         let payment = new PayPalPayment('150.00', 'USD', 'Parking', 'sale');
         this.payPal.renderSinglePaymentUI(payment).then(() => {
           // Successfully paid
     
           this.paymentAlert('Successfully paid')
-          // Example sandbox response
-          //
-          // {
-          //   "client": {
-          //     "environment": "sandbox",
-          //     "product_name": "PayPal iOS SDK",
-          //     "paypal_sdk_version": "2.16.0",
-          //     "platform": "iOS"
-          //   },
-          //   "response_type": "payment",
-          //   "response": {
-          //     "id": "PAY-1AB23456CD789012EF34GHIJ",
-          //     "state": "approved",
-          //     "create_time": "2016-10-03T13:33:33Z",
-          //     "intent": "sale"
-          //   }
-          // }
+
         }, () => {
           // Error or render dialog closed without being successful
           this.paymentAlert('Error or render dialog closed without being successful');

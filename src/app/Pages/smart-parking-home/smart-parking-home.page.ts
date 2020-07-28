@@ -255,7 +255,7 @@ searchParking(ev: any) {
       return (location.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1);
     })
   }
-}//END OF GET MEMBER
+}
 
 
 
